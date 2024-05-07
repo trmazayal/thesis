@@ -1,0 +1,40 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: server
+  targetCPUUtilizationPercentage: 85
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: us-central1-docker.pkg.dev/ir-ganjil-24/shared-cpu-django/app
+        resources:
+          requests:
+            cpu: 1
+          limits:
+            cpu: 1.3
+        ports:
+          - containerPort: 8000
