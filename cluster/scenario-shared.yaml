@@ -34,7 +34,5 @@ spec:
         resources:
           requests:
             cpu: 1
-          limits:
-            cpu: 1.4
         ports:
           - containerPort: 8000
