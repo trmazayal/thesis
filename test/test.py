@@ -14,13 +14,22 @@ async def fetch(site):
 # Example: to simulate 50% server CPU usage, call 5 times per second
 # It will make server CPU being used for 500ms and idling for 500ms
 async def main(workloads):
+    host = "http://localhost"
+    length = "100.0"
+
+    if len(sys.argv) > 0:
+        host = sys.argv[0]
+    
+    if len(sys.argv) > 1:
+        length = sys.argv[1]
+
     session = aiohttp.ClientSession()
 
     tasks = []
     for i in range(len(workloads)):
         start_time = time.time()
         for j in range(workloads[i]):
-            task = asyncio.create_task(fetch(sys.argv[0] + "/?length=100.0"))
+            task = asyncio.create_task(fetch(host + "/?length=" + length))
             tasks.append(task)
         await asyncio.sleep(1)
         print("Epoch", i, ": Hit", workloads[i], "times in", time.time()-start_time, "seconds")
