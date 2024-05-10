@@ -4,6 +4,7 @@ import asyncio
 import time
 import csv
 import math
+import sys
 
 async def fetch(site):
     async with aiohttp.ClientSession() as session, session.get(site) as response:
@@ -17,11 +18,11 @@ async def main(workloads):
     host = "http://localhost"
     length = "100.0"
 
-    if len(sys.argv) > 0:
-        host = sys.argv[0]
-    
     if len(sys.argv) > 1:
-        length = sys.argv[1]
+        host = sys.argv[1]
+    
+    if len(sys.argv) > 2:
+        length = sys.argv[2]
 
     session = aiohttp.ClientSession()
 
@@ -43,13 +44,13 @@ if __name__ == "__main__":
 
     # The CSV file must contains only one column without header
     # Each row value is average CPU usage per fixed length of time
-    with open("./workload.csv", "r") as csvfile:
+    with open("./workload.csv", "r", encoding="utf-8-sig") as csvfile:
         reader_variable = csv.reader(csvfile, delimiter=",")
         for row in reader_variable:
             request_per_second = math.ceil(float(row[0])*10.0)
 
-            # Defined time unit as 15 second
-            for i in range(15):
+            # Defined time unit as 60 seconds, according to metrics-server fetch interval
+            for i in range(60):
                 workloads.append(request_per_second)
 
     loop = asyncio.get_event_loop()
