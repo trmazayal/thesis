@@ -56,21 +56,11 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 1.  SSH ke dalam mesin virtual klien
 
-2.  Instal Git
-
-    `sudo apt update && sudo apt install git`
-
-3.  Clone repositori ini
-
-4.  Instal Pip dan modul aiohttp
-
-    `sudo apt install python3-pip && pip3 install aiohttp`
-
-5.  Ke direktori test
+2.  Ke direktori test
 
     `cd ~/thesis/test`
 
-6.  Jalankan tes
+3.  Jalankan tes
 
     `python3 test.py http://<load-balancer-ip>:8000`
 
