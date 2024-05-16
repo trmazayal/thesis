@@ -9,91 +9,52 @@ Judul: Evaluasi Shared CPU Resource pada Layanan Kubernetes Terkelola
 
     `git clone https://github.com/hamonangann/thesis`
 
-
-### Panduan menjalankan klaster pada Google Kubernetes Engine (GKE)
-
-1.  Tentukan zone (contoh: `us-west1-a`)
-
-    `gcloud config set compute/zone us-west1-a`
-
-2.  Buat klaster GKE baru
-
-    `gcloud container clusters create --machine-type=n1-highcpu-32 --zone=us-west1-a lab-cluster --num-nodes=1`
-
-3.  Set kubectl ke klaster yang dibuat
-
-    `gcloud container clusters get-credentials lab-cluster`
-
-4.  Pilih salah satu skenario pada folder `cluster/pods` (contoh: `baseline.yaml`)
-
-    `kubectl apply -f cluster/pods/baseline.yaml`
-
-5.  Buat _load balancer_
-
-    `kubectl apply -f cluster/service.yaml`
-
-6.  Dapatkan alamat IP _load balancer_
-
-    `kubectl get svc server --output yaml | grep -oP "ip: \K.*"`
+    `cd thesis`
 
 
-### Panduan menjalankan klaster pada Google Compute Engine (GCE)
+### Panduan menjalankan klaster
 
-1.  Buat mesin virtual untuk klaster
+1.  (Untuk layanan Kubernetes GKE) Jalankan skrip start
 
-    `gcloud compute instances create cluster --zone=us-west1-a --machine-type=n1-highcpu-32 --tags k3s`
+    `chmod +x provision-gke/start.sh`
 
-2.  Buat firewall untuk izinkan akses _remote_
+    `.provision-gke/start.sh`
 
-    `gcloud compute firewall-rules create k3s --allow=tcp:6443 --target-tags=k3s`
+    Note: ketikkan "yes" ketika muncul prompt
 
-3.  Buat file SSH
+2.  (Untuk manual IaaS GCE) Jalankan skrip start
 
-    `gcloud compute config-ssh`
+    `chmod +x provision-gce/start.sh`
 
-4.  Dapatkan alamat IP klaster
+    `.provision-gce/start.sh`
 
-    `gcloud compute instances describe cluster | grep -oP "natIP: \K.*"`
+    Note: ketikkan "yes" ketika muncul prompt
 
-5.  Instalasi dan jalankan skrip k3sup
+3.  Cek alamat IP load balancer
 
-    `curl -sLS https://get.k3sup.dev | sh`
+    `echo $LB_IP`
 
-    `sudo install k3sup /usr/local/bin/`
-
-    `k3sup install --ip <cluster-ip> --context k3s --ssh-key ~/.ssh/google_compute_engine --user $(whoami)`
-
-6.  Pilih salah satu skenario pada folder `cluster/pods` (contoh: `baseline.yaml`)
+4.  Jalankan salah satu skenario (contoh: `baseline.yaml`)
 
     `kubectl apply -f cluster/pods/baseline.yaml`
-
-7.  Buat _load balancer_
-
-    `kubectl apply -f cluster/service.yaml`
-
-8.  Dapatkan alamat IP _load balancer_
-
-    `kubectl get svc server --output yaml | grep -oP "ip: \K.*"`
 
 
 ### Panduan mengakses web
 
-1.  Buat mesin virtual client
+Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan contoh berikut:
 
-    `gcloud compute instances create client --zone=us-west1-a --machine-type=e2-standard-4`
-
-2.  SSH ke dalam mesin virtual
+1.  SSH ke dalam mesin virtual klien
 
     `gcloud compute ssh client`
 
-3.  Akses web
+2.  Akses web
 
     `curl <load-balancer-ip>:8000`
 
 
 ### Panduan pengujian secara otomatis
 
-1.  SSH ke dalam mesin virtual
+1.  SSH ke dalam mesin virtual klien
 
 2.  Instal Git
 
@@ -131,16 +92,18 @@ Judul: Evaluasi Shared CPU Resource pada Layanan Kubernetes Terkelola
 
 ### Cleanup
 
-1.  Delete client
+1.  (Untuk layanan Kubernetes GKE) Jalankan skrip stop
 
-    `gcloud compute instances delete client`
+    `chmod +x provision-gke/stop.sh`
 
-2.  Delete cluster (untuk GKE)
+    `.provision-gke/stop.sh`
 
-    `gcloud container clusters delete lab-cluster`
+    Note: ketikkan "yes" ketika muncul prompt
 
-3.  Delete cluster dan firewallnya (untuk GCE)
+2.  (Untuk manual IaaS GCE) Jalankan skrip stop
 
-    `gcloud compute instances delete cluster`
-    
-    `gcloud compute firewall-rules delete k3s`
+    `chmod +x provision-gce/stop.sh`
+
+    `.provision-gce/stop.sh`
+
+    Note: ketikkan "yes" ketika muncul prompt
