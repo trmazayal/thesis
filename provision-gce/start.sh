@@ -6,7 +6,7 @@ gcloud config set compute/zone us-west1-a
 
 # Buat mesin klaster dan mesin klien
 terraform init
-terraform apply
+terraform apply -var "project=$(gcloud config get-value project)"
 
 # Buat berkas SSH
 gcloud compute config-ssh

@@ -1,18 +1,18 @@
 resource "google_container_cluster" "cluster" {
-  name     = "cluster"
-  location = "us-west1-a"
+  name               = "cluster"
+  location           = "us-west1-a"
   initial_node_count = 1
 
   node_config {
     preemptible  = true
     machine_type = "n1-highcpu-32"
 
-    oauth_scopes    = [
+    oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
-  }  
+  }
 
-  enable_autopilot = false
+  enable_autopilot    = false
   deletion_protection = false
 
   network    = "default"

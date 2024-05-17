@@ -16,18 +16,26 @@ Judul: Evaluasi Shared CPU Resource pada Layanan Kubernetes Terkelola
 
 1.  (Untuk layanan Kubernetes GKE) Jalankan skrip start
 
-    `chmod +x provision-gke/start.sh`
+    `cd provision-gke`
 
-    `.provision-gke/start.sh`
+    `chmod +x start.sh`
+
+    `./start.sh`
+
+    `cd ..`
 
     Note: ketikkan "yes" ketika muncul prompt
 
 2.  (Untuk manual IaaS GCE) Jalankan skrip start
 
-    `chmod +x provision-gce/start.sh`
+    `cd provision-gce`
+    
+    `chmod +x start.sh`
 
-    `.provision-gce/start.sh`
+    `./start.sh`
 
+    `cd ..`
+    
     Note: ketikkan "yes" ketika muncul prompt
 
 3.  Cek alamat IP load balancer
@@ -84,16 +92,24 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 1.  (Untuk layanan Kubernetes GKE) Jalankan skrip stop
 
-    `chmod +x provision-gke/stop.sh`
+    `cd provision-gke`
+    
+    `chmod +x stop.sh`
 
-    `.provision-gke/stop.sh`
+    `./stop.sh`
+
+    `cd ..`
 
     Note: ketikkan "yes" ketika muncul prompt
 
 2.  (Untuk manual IaaS GCE) Jalankan skrip stop
 
-    `chmod +x provision-gce/stop.sh`
+    `cd provision-gce`
+    
+    `chmod +x stop.sh`
 
-    `.provision-gce/stop.sh`
+    `./stop.sh`
+
+    `cd ..`
 
     Note: ketikkan "yes" ketika muncul prompt

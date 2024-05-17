@@ -6,7 +6,7 @@ gcloud config set compute/zone us-west1-a
 
 # Buat mesin klaster GKE (instalasi otomatis) dan mesin klien
 terraform init
-terraform apply
+terraform apply -var "project=$(gcloud config get-value project)"
 
 # Dapatkan kredensial klaster untuk kubectl
 gcloud container clusters get-credentials cluster
