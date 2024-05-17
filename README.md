@@ -70,6 +70,8 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 3.  Jalankan tes
 
+    `source ~/venv/bin/activate`
+    
     `python3 test.py http://<load-balancer-ip>:8000`
 
 
