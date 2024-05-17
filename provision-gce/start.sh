@@ -22,6 +22,9 @@ export KUBECONFIG=`pwd`/kubeconfig
 
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml
-echo "Loading load balancer IP..."
-sleep 10
-LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")
+LB_IP=""
+while [ -z "$LB_IP" ]
+do
+    LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")
+    sleep 10s
+done

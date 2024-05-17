@@ -13,6 +13,9 @@ gcloud container clusters get-credentials cluster
 
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml
-echo "Loading load balancer IP..."
-sleep 30
-LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")
+LB_IP=""
+while [ -z "$LB_IP" ]
+do
+    LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")
+    sleep 10s
+done
