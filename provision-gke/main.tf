@@ -38,5 +38,5 @@ resource "google_compute_instance" "client" {
     access_config {}
   }
 
-  metadata_startup_script = "sudo apt update && sudo apt install git && sudo apt install python3-pip && pip3 install aiohttp; git clone https://github.com/hamonangann/thesis && cd thesis"
+  metadata_startup_script = file("./client-start.sh")
 }

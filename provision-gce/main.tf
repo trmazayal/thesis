@@ -49,5 +49,5 @@ resource "google_compute_instance" "client" {
     access_config {}
   }
 
-  metadata_startup_script = "echo hi > /test.txt"
+  metadata_startup_script = file("./client-start.sh")
 }
