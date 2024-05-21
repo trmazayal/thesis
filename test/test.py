@@ -7,7 +7,7 @@ import math
 import sys
 
 async def fetch(site):
-    async with aiohttp.ClientSession() as session, session.get(site) as response:
+    async with aiohttp.ClientSession(timeout=1.01) as session, session.get(site) as response:
         print(await response.text())
 
 # Function to asynchronously call a server x times per second
