@@ -79,7 +79,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 1.  Untuk memantau jumlah pod secara berulang, buka tab Cloud Shell baru, lalu jalankan
 
-    `watch -t "(printf '%(%H:%M:%S,)T' ; kubectl get pods --no-headers | wc -l) | tee -a result.csv"`
+    `watch -t "(printf '%(%H:%M:%S,)T' ; kubectl get pods --no-headers | grep 'Running' | wc -l) | tee -a result.csv"`
 
 2.  Untuk memantau aktivitas Kubernetes HorizontalPodAutoscaling, buka tab Cloud shell baru, lalu jalankan
 
