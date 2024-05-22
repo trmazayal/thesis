@@ -5,10 +5,28 @@ import time
 import csv
 import math
 import sys
+import subprocess
+from multiprocessing import Pool
 
+# Function to count pod, need kubectl installed
+def count_pod():
+    cmd = "kubectl get pods --no-headers | grep 'Running' | wc -l"
+    ps = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+    pod_count = int(ps.stdout)
+    return pod_count
+
+def write_report(desired, actual):
+    with open('report.csv','a') as f:
+        timestamp = time.strftime('%X')
+        f.write(f"{timestamp},{desired},{actual}\n")
+
+# Function to asynchronously fetch cluster endpoint (load balancer)
 async def fetch(site):
-    async with aiohttp.ClientSession(timeout=1.01) as session, session.get(site) as response:
-        print(await response.text())
+    try:
+        async with aiohttp.ClientSession() as session, session.get(site) as response:
+            print(await response.text())
+    except Exception as e:
+        print(repr(e))
 
 # Function to asynchronously call a server x times per second
 # The server must handle one request at a time and return the response in 100ms
@@ -27,20 +45,37 @@ async def main(workloads):
     session = aiohttp.ClientSession()
 
     tasks = []
+
+    pod_count = 2 # Initial pod count
+
     for i in range(len(workloads)):
         start_time = time.time()
-        for j in range(workloads[i]):
+        
+        pool = Pool(processes=1)
+        result = pool.apply_async(count_pod) # Evaluate pod count in separate process
+
+        number_of_hit = min(workloads[i], 10*pod_count)
+
+        for j in range(number_of_hit):
             task = asyncio.create_task(fetch(host + "/?length=" + length))
             tasks.append(task)
+
+        pod_count = int(result.get())
+        pool.apply_async(write_report, (workloads[i]*0.1, pod_count*1.0))
+
         await asyncio.sleep(1)
-        print("Epoch", i, ": Hit", workloads[i], "times in", time.time()-start_time, "seconds")
+
+        if workloads[i] > 10 * pod_count:
+            print("Epoch", i, ": Hit", number_of_hit, "/", workloads[i], "times in", time.time()-start_time, "seconds (DEGRADATION)")
+        else:
+            print("Epoch", i, ": Hit", number_of_hit, "/", workloads[i], "times in", time.time()-start_time, "seconds")
 
     responses = await asyncio.gather(*tasks, return_exceptions=True)
     await session.close()
     
 
 if __name__ == "__main__":
-    workloads = []
+    workloads = 60 * [21] + 60 * [31]
 
     # The CSV file must contains only one column without header
     # Each row value is average CPU usage per fixed length of time

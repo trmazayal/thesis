@@ -2,6 +2,8 @@
 # Disarankan menggunakan Cloud Shell agar tidak perlu instal manual
 
 # Set zona
+
+#! /bin/bash
 gcloud config set compute/zone us-west1-a
 
 # Buat mesin klaster dan mesin klien
@@ -20,11 +22,10 @@ k3sup install --ip $CLUSTER_IP --context k3s --ssh-key ~/.ssh/google_compute_eng
 # Dapatkan kredensial klaster untuk kubectl
 export KUBECONFIG=`pwd`/kubeconfig
 
+# Salin kredensial klaster ke client
+gcloud compute scp kubeconfig $(whoami)@client:/tmp
+gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG=/tmp/kubeconfig >> /etc/profile"'
+
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml
-LB_IP=""
-while [ -z "$LB_IP" ]
-do
-    LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")
-    sleep 10s
-done
+EOF

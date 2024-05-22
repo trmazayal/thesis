@@ -2,6 +2,7 @@
 # Disarankan menggunakan Cloud Shell agar tidak perlu instal manual
 
 # Set zona
+#! /bin/bash
 gcloud config set compute/zone us-west1-a
 
 # Buat mesin klaster GKE (instalasi otomatis) dan mesin klien
@@ -11,11 +12,10 @@ terraform apply -var "project=$(gcloud config get-value project)"
 # Dapatkan kredensial klaster untuk kubectl
 gcloud container clusters get-credentials cluster
 
+# Salin kredensial klaster ke client
+gcloud compute scp kubeconfig $(whoami)@client:/srv
+gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG:/srv/kubeconfig >> /etc/profile"'
+
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml
-LB_IP=""
-while [ -z "$LB_IP" ]
-do
-    LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")
-    sleep 10s
-done
+EOF

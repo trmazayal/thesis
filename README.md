@@ -38,11 +38,7 @@ Judul: Evaluasi Shared CPU Resource pada Layanan Kubernetes Terkelola
     
     Note: ketikkan "yes" ketika muncul prompt
 
-3.  Cek alamat IP load balancer
-
-    `echo $LB_IP`
-
-4.  Jalankan salah satu skenario (contoh: `baseline.yaml`)
+3.  Jalankan salah satu skenario (contoh: `baseline.yaml`)
 
     `kubectl apply -f cluster/pods/baseline.yaml`
 
@@ -55,24 +51,34 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
     `gcloud compute ssh client`
 
-2.  Akses web
+2.  Dapatkan IP dari load balancer
 
-    `curl <load-balancer-ip>:8000`
+    `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")`
+
+3.  Akses web
+
+    `curl $LB_IP:8000`
 
 
 ### Panduan pengujian secara otomatis
 
 1.  SSH ke dalam mesin virtual klien
 
-2.  Ke direktori test
+2.  Nyalakan virtual environment
 
-    `cd ~/thesis/test`
-
-3.  Jalankan tes
-
-    `source ~/venv/bin/activate`
+    `source /srv/venv/bin/activate`
     
-    `python3 test.py http://<load-balancer-ip>:8000`
+3.  Ke direktori test
+
+    `cd /srv/thesis/test`
+
+4.  Dapatkan IP dari load balancer
+
+    `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")`
+
+5.  Jalankan tes
+    
+    `python3 test.py http://$LB_IP:8000`
 
 
 ### Panduan memantau jumlah pod dan autoscaling
