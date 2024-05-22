@@ -76,7 +76,7 @@ async def main(workloads):
     
 
 if __name__ == "__main__":
-    workloads = 60 * [21] + 60 * [31]
+    workloads = []
 
     # The CSV file must contains only one column without header
     # Each row value is average CPU usage per fixed length of time
