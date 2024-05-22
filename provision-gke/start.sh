@@ -14,7 +14,7 @@ gcloud container clusters get-credentials cluster
 
 # Salin kredensial klaster ke client
 gcloud compute scp ~/.kube/config $(whoami)@client:/tmp
-gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG=/tmp/kubeconfig >> /etc/profile"'
+gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG=/tmp/config >> /etc/profile"'
 
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml
