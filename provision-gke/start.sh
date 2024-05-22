@@ -13,8 +13,8 @@ terraform apply -var "project=$(gcloud config get-value project)"
 gcloud container clusters get-credentials cluster
 
 # Salin kredensial klaster ke client
-gcloud compute scp kubeconfig $(whoami)@client:/srv
-gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG:/srv/kubeconfig >> /etc/profile"'
+gcloud compute scp kubeconfig $(whoami)@client:/tmp
+gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG=/tmp/kubeconfig >> /etc/profile"'
 
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml

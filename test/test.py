@@ -48,10 +48,11 @@ async def main(workloads):
 
     pod_count = 2 # Initial pod count
 
+    pool = Pool(processes=1)
+
     for i in range(len(workloads)):
         start_time = time.time()
         
-        pool = Pool(processes=1)
         result = pool.apply_async(count_pod) # Evaluate pod count in separate process
 
         number_of_hit = min(workloads[i], 10*pod_count)
@@ -60,10 +61,10 @@ async def main(workloads):
             task = asyncio.create_task(fetch(host + "/?length=" + length))
             tasks.append(task)
 
+        await asyncio.sleep(1)
+
         pod_count = int(result.get())
         pool.apply_async(write_report, (workloads[i]*0.1, pod_count*1.0))
-
-        await asyncio.sleep(1)
 
         if workloads[i] > 10 * pod_count:
             print("Epoch", i, ": Hit", number_of_hit, "/", workloads[i], "times in", time.time()-start_time, "seconds (DEGRADATION)")
