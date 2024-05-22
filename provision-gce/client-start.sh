@@ -9,5 +9,5 @@ python3 -m venv /srv/venv
 source /srv/venv/bin/activate
 pip3 install aiohttp
 git clone https://github.com/hamonangann/thesis
-sudo chmod 777 ./thesis/
+sudo chmod 777 ./thesis/test/
 EOF
