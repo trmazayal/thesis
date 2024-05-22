@@ -4,6 +4,7 @@ sudo apt install -y git
 sudo apt install -y python3-pip
 sudo apt install -y python3-venv
 sudo apt install -y kubectl
+sudo apt install -y google-cloud-sdk-gke-gcloud-auth-plugin
 cd /srv
 python3 -m venv /srv/venv
 source /srv/venv/bin/activate

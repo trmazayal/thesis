@@ -51,11 +51,15 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
     `gcloud compute ssh client`
 
-2.  Dapatkan IP dari load balancer
+2.  (Khusus klaster GKE) Login ke Google
+
+    `gcloud auth login`
+
+3.  Dapatkan IP dari load balancer
 
     `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")`
 
-3.  Akses web
+4.  Akses web
 
     `curl $LB_IP:8000`
 
