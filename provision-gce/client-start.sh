@@ -8,6 +8,8 @@ cd /srv
 python3 -m venv /srv/venv
 source /srv/venv/bin/activate
 pip3 install aiohttp
+pip3 install pandas
+pip3 install matplotlib
 git clone https://github.com/hamonangann/thesis
 sudo chmod 777 ./thesis/test/
 EOF
