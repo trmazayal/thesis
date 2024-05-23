@@ -58,3 +58,5 @@ ax.fill_between(cpu_used.index, cpu_used, facecolor='green', alpha=1,step='pre',
 print("CPU Guaranteed", cpu_guaranteed_sum)
 print("CPU Shared", cpu_shared_sum)
 print("CPU Degradation", cpu_degradation_sum)
+
+plt.savefig('plot.png')

@@ -88,6 +88,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
     `python3 analyze.py`
 
+7.  Akan muncul analisis CPU dan plot.png. Unduh file atau pakai SCP untuk melihat hasilnya.
 
 ### Cleanup
 
