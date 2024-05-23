@@ -84,20 +84,9 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
     
     `python3 test.py http://$LB_IP:8000`
 
+6.  Setelah tes selesai, akan muncul report.csv. Jalankan analyze
 
-### Panduan memantau jumlah pod dan autoscaling
-
-1.  Untuk memantau jumlah pod secara berulang, buka tab Cloud Shell baru, lalu jalankan
-
-    `watch -t "(printf '%(%H:%M:%S,)T' ; kubectl get pods --no-headers | grep 'Running' | wc -l) | tee -a result.csv"`
-
-2.  Untuk memantau aktivitas Kubernetes HorizontalPodAutoscaling, buka tab Cloud shell baru, lalu jalankan
-
-    `kubectl describe hpa`
-
-3.  Untuk memantau utilisasi CPU setiap pod, buka tab Cloud Shell baru, lalu jalankan
-
-    `kubectl top pods`
+    `python3 analyze.py`
 
 
 ### Cleanup
