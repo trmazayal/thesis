@@ -34,13 +34,17 @@ async def fetch(site):
 # It will make server CPU being used for 500ms and idling for 500ms
 async def main(workloads):
     host = "http://localhost"
+    pod_size = 1
     length = "100.0"
-
+    
     if len(sys.argv) > 1:
         host = sys.argv[1]
     
     if len(sys.argv) > 2:
-        length = sys.argv[2]
+        pod_size = int(sys.argv[2])
+
+    if len(sys.argv) > 3:
+        length = sys.argv[3]
 
     session = aiohttp.ClientSession()
 
@@ -55,7 +59,7 @@ async def main(workloads):
         
         result = pool.apply_async(count_pod) # Evaluate pod count in separate process
 
-        number_of_hit = min(workloads[i], 10*pod_count)
+        number_of_hit = min(workloads[i], 10*pod_size*pod_count)
 
         for j in range(number_of_hit):
             task = asyncio.create_task(fetch(host + "/?length=" + length))
@@ -64,9 +68,9 @@ async def main(workloads):
         await asyncio.sleep(1)
 
         pod_count = int(result.get())
-        pool.apply_async(write_report, (workloads[i]*0.1, pod_count*1.0))
+        pool.apply_async(write_report, (workloads[i]*0.1, pod_size*pod_count*1.0))
 
-        if workloads[i] > 10 * pod_count:
+        if workloads[i] > 10 * pod_size * pod_count:
             print("Epoch", i, ": Hit", number_of_hit, "/", workloads[i], "times in", time.time()-start_time, "seconds (DEGRADATION)")
         else:
             print("Epoch", i, ": Hit", number_of_hit, "/", workloads[i], "times in", time.time()-start_time, "seconds")
