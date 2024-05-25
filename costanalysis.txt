@@ -1,0 +1,51 @@
+Baseline yaml
+CPU Guaranteed 2099.11313559322
+CPU Shared 0.0
+CPU Degradation 47.10440677966102
+
+Baseline yaml (Shared 10%)
+CPU Guaranteed 2099.11313559322
+CPU Shared 8.046073446327684
+CPU Degradation 39.05833333333334
+
+Baseline yaml (Shared 20%)
+CPU Guaranteed 2099.11313559322
+CPU Shared 13.744406779661016
+CPU Degradation 33.36000000000001
+
+Baseline yaml (Shared 30%)
+CPU Guaranteed 2099.11313559322
+CPU Shared 17.599406779661017
+CPU Degradation 29.505000000000003
+
+Baseline yaml (Shared 40%)
+CPU Guaranteed 2099.11313559322
+CPU Shared 20.89440677966102
+CPU Degradation 26.210000000000008
+
+Baseline yaml (Shared 50%)
+CPU Guaranteed 2099.11313559322
+CPU Shared 24.109406779661022
+CPU Degradation 22.995
+
+Guaranteed 2vCPU
+CPU Guaranteed 2199.828813559322
+CPU Shared 0.0
+CPU Degradation 25.262175141242942
+
+Guaranteed 5vCPU
+CPU Guaranteed 2456.6237322515212
+CPU Shared 0.0
+CPU Degradation 4.623333333333337
+
+Threshold 75%
+CPU Guaranteed 2417.653261427837
+CPU Shared 0.0
+CPU Degradation 29.940338983050847
+
+Thresold 60%
+CPU Guaranteed 3053.004468412943
+CPU Shared 0.0
+CPU Degradation 11.384774011299438
+
+
