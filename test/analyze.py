@@ -6,8 +6,8 @@ import sys
 # Percentage of shared resource allowed
 alpha = 0.0
 
-# if len(sys.argv) > 1:
-#     alpha = float(sys.argv[1])
+if len(sys.argv) > 1:
+    alpha = float(sys.argv[1])
 
 df = pd.read_csv('report.csv', usecols=[0,1,2], names=['timestamp','desired', 'actual'])
 df.sort_values(by=['timestamp'])
