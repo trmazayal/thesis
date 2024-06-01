@@ -2,8 +2,37 @@
 
 Judul: Evaluasi Shared CPU Resource pada Layanan Kubernetes Terkelola
 
+### Direktori
 
-### Panduan Instalasi
+1.  `cluster`: berisi berkas manifes klaster yang diuji untuk setiap skenario.
+
+2.  `provision-gce`: berisi skrip untuk meluncurkan klaster dan program klien sebagai mesin virtual Google Compute Engine di atas jaringan yang sama
+
+3.  `provision-gke`: berisi skrip untuk meluncurkan klaster ke dalam layanan Google Kubernetes Engine terkelola dan program klien sebagai mesin virtual Google Compute Engine di atas jaringan yang sama
+
+4.  `test`: berisi program klien. `test.py` digunakan untuk melakukan _load testing_, sedangakan `analyze.py` digunakan untuk menganalisis laporan hasil _load testing_.
+
+
+### Panduan Reproduksi Penelitian
+
+Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalankan skenario _guaranteed resource_ dengan 2 vCPU dengan layanan Kubernetes terkelola GKE, lakukan hal berikut:
+
+1.  Ikuti [Panduan instalasi](#panduan-instalasi)
+
+2.  Lanjutkan dengan [Panduan menjalankan klaster](#panduan-menjalankan-klaster) untuk layanan Kubrenetes GKE. Pada langkah nomor 3, jalankan
+
+    `kubectl apply -f cluster/pods/scenario-guaranteed-2vCPU.yaml`
+
+3.  Sebelum melakukan _load testing_, Anda dapat mencoba akses web dengan mengikuti [Panduan mengakses web](#panduan-mengakses-web).
+
+4.  Untuk hasil uji yang akurat, sebelum _load testing_, gunakan perintah `kubectl top pods` (dapat dieksekusi di Cloud Shell) dan pastikan jumlah awal _pod_ adalah 2 dan utilisasi kedua CPU adalah 1m.
+
+5.  Lakukan _load testing_ dengan mengikuti [Panduan pengujian secara otomatis](#panduan-pengujian-secara-otomatis).
+
+6.  Selesai menguji, pastikan melakukan [Cleanup](#cleanup) untuk menghapus resource yang disewa untuk keperluan tes.
+
+
+### Panduan instalasi
 
 1.  Clone repositori ini pada Google Cloud Shell atau Google Cloud SDK
 
@@ -88,7 +117,13 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
     `python3 analyze.py`
 
-7.  Akan muncul analisis CPU dan plot.png. Unduh file atau pakai SCP untuk melihat hasilnya.
+7.  (Opsional) untuk melihat dampak _shared resource_, jalankan analyze dengan parameter
+
+    `python3 analyze.py 0.5`
+
+    Bilangan 0.5 dapat diganti dengan bilangan _float_ > 0.0 apa saja. Ia menyatakan banyaknya _shared resource_ dalam satuan vCPU.
+
+8.  Akan muncul analisis CPU dan plot.png. Unduh file atau pakai SCP untuk melihat hasilnya.
 
 ### Cleanup
 
