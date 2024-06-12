@@ -31,7 +31,7 @@ gcloud compute scp kubeconfig $(whoami)@client:/tmp
 gcloud compute ssh client --command='sudo sh -c "echo export KUBECONFIG=/tmp/kubeconfig >> /etc/profile"'
 
 # Mencegah pod dideploy ke master node
-kubectl taint node gce-master-node node-role.kubernetes.io/master:NoSchedule
+kubectl taint node gce-master-node.c.$(gcloud config get-value project).internal node-role.kubernetes.io/master:NoSchedule
 
 # Instalasi load balancer
 kubectl apply -f ../cluster/service.yaml
