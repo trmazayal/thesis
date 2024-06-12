@@ -21,7 +21,7 @@ k3sup install --ip $MASTER_IP --context k3s --ssh-key ~/.ssh/google_compute_engi
 
 # Instalasi worker node
 WORKER_IP=$(gcloud compute instances describe gce-worker-node | grep -oP "natIP: \K.*")
-k3sup install --ip $WORKER_IP --server-ip $MASTER_IP --context k3s --ssh-key ~/.ssh/google_compute_engine --user $(whoami)
+k3sup join --ip $WORKER_IP --server-ip $MASTER_IP --context k3s --ssh-key ~/.ssh/google_compute_engine --user $(whoami)
 
 # Dapatkan kredensial klaster untuk kubectl
 export KUBECONFIG=`pwd`/kubeconfig
