@@ -86,7 +86,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 3.  Dapatkan IP dari load balancer
 
-    `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")`
+    `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*" | head -1)`
 
 4.  Akses web
 
@@ -107,11 +107,13 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 4.  Dapatkan IP dari load balancer
 
-    `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*")`
+    `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*" | head -1)`
 
 5.  Jalankan tes
     
-    `python3 test.py http://$LB_IP:8000`
+    `python3 test.py http://$LB_IP:8000 1`
+
+    Bilangan 1 menyatakan jumlah _guaranteed resource_ dalam vCPU. Untuk skenario dengan >1vCPU ganti ini dengan jumlah vCPU yang dimaksud.
 
 6.  Setelah tes selesai, akan muncul report.csv. Jalankan analyze
 

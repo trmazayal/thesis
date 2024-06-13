@@ -32,10 +32,10 @@ for i in range(len(desired)):
   cpu_used_arr.append(min(desired[i], actual[i]))
   cpu_idle_arr.append(actual[i] if actual[i] > desired[i] else 0.0)
   cpu_degr_arr.append(desired[i] if desired[i] > actual[i]*(1.0+alpha) else 0.0)
-  cpu_shared_arr.append(min(desired[i], actual[i]*(1.0+alpha)) if desired[i] > actual[i] else 0.0)
+  cpu_shared_arr.append(actual[i]*(1.0+alpha) if desired[i] > actual[i] else 0.0)
 
   cpu_guaranteed_sum += actual[i]
-  cpu_shared_sum += min(desired[i]-actual[i], actual[i]*alpha) if desired[i] > actual[i] else 0
+  cpu_shared_sum += actual[i]*alpha if desired[i] > actual[i] else 0
   cpu_degradation_sum += max(desired[i]-actual[i]*(1.0+alpha), 0)
 
 cpu_used = pd.Series(cpu_used_arr)
