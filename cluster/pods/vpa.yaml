@@ -1,0 +1,31 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: server-vpa
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: server
+  updatePolicy:
+    updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: "VPA10"
+      controlledValues: "RequestsAndLimits"
+      minAllowed:
+        cpu: "250m"
+      maxAllowed:
+        cpu: "4"
+    - containerName: "VPA15"
+      controlledValues: "RequestsAndLimits"
+      minAllowed:
+        cpu: "250m"
+      maxAllowed:
+        cpu: "4"
+    - containerName: "VPA20"
+      controlledValues: "RequestsAndLimits"
+      minAllowed:
+        cpu: "250m"
+      maxAllowed:
+        cpu: "4"
