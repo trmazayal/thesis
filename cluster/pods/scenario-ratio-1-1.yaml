@@ -16,7 +16,7 @@ spec:
         app: server
     spec:
       containers:
-      - name: VPA10
+      - name: vpa10
         image: hamonangann/thesis-app
         resources:
           requests:

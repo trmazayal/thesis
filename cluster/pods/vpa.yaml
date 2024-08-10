@@ -11,19 +11,19 @@ spec:
     updateMode: "Auto"
   resourcePolicy:
     containerPolicies:
-    - containerName: "VPA10"
+    - containerName: "vpa10"
       controlledValues: "RequestsAndLimits"
       minAllowed:
         cpu: "250m"
       maxAllowed:
         cpu: "4"
-    - containerName: "VPA15"
+    - containerName: "vpa15"
       controlledValues: "RequestsAndLimits"
       minAllowed:
         cpu: "250m"
       maxAllowed:
         cpu: "4"
-    - containerName: "VPA20"
+    - containerName: "vpa20"
       controlledValues: "RequestsAndLimits"
       minAllowed:
         cpu: "250m"
