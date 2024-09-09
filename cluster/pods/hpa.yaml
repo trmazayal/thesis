@@ -11,4 +11,4 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: server
-  targetCPUUtilizationPercentage: 95
+  targetCPUUtilizationPercentage: 90
