@@ -29,3 +29,9 @@ spec:
         cpu: "250m"
       maxAllowed:
         cpu: "4"
+    - containerName: "vpa25"
+      controlledValues: "RequestsAndLimits"
+      minAllowed:
+        cpu: "250m"
+      maxAllowed:
+        cpu: "4"
