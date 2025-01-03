@@ -39,8 +39,8 @@ Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalanka
 
     - installasi [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), [Google Cloud SDK ](https://cloud.google.com/sdk/docs/install), [kuectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-    - Memeriksa limitasi Quota di Google Cloud Console. Buka halaman [Google Cloud Quotas](https://console.cloud.google.com/iam-admin/quotas). tambahkan pada filter  `CPUs` dan region yg diinginkan. Pastikan bahwa quota CPU yang diinginkan tercukupi. Jika kurang dari 48, request peningkatan quota.
-    
+    - Memeriksa limitasi Quota di Google Cloud Console. Buka halaman [Google Cloud Quotas](https://console.cloud.google.com/iam-admin/quotas). tambahkan pada filter  `CPUs` dan region yg diinginkan. Pastikan bahwa quota CPU yang diinginkan tercukupi. Jika kurang dari 48, request peningkatan quota menjadi 48.
+
 
 
 
@@ -63,7 +63,7 @@ Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalanka
 
     `cd ..`
 
-    Note: 
+    Note:
     - ketikkan "yes" ketika muncul prompt
     - ganti ke region lain pada file provision-gke/main.tf & provision-gke/start.sh, jika terdapar error resource cpu tidak tersedia
 
@@ -71,17 +71,17 @@ Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalanka
 2.  (Untuk manual IaaS GCE) Jalankan skrip start
 
     `cd provision-gce`
-    
+
     `chmod +x start.sh`
 
     `./start.sh`
 
     `cd ..`
-    
+
     Note:
+    - gunakan script `start-macos.sh` jika menjalankan di MacOS
     - ketikkan "yes" ketika muncul prompt
     - ganti ke region lain pada file provision-gce/main.tf & provision-gce/start.sh, jika terdapar error resource cpu tidak tersedia
-    - gunakan script `start-macos.sh` jika menjalankan di MacOS
 
 3.  Jalankan salah satu skenario (contoh: `baseline.yaml`)
 
@@ -99,6 +99,9 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 2.  (Khusus klaster GKE) Login ke Google
 
     `gcloud auth login`
+
+    update konfigurasi kubeconfig
+    `gcloud container clusters get-credentials cluster --zone=ZONE --project=PROJECT_ID`
 
 3.  Dapatkan IP dari load balancer
 
@@ -118,7 +121,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 2.  Nyalakan virtual environment
 
     `source /srv/venv/bin/activate`
-    
+
 3.  Ke direktori test
 
     `cd /srv/thesis/test`
@@ -128,10 +131,16 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
     `LB_IP=$(kubectl get svc server --output yaml | grep -oP "ip: \K.*" | head -1)`
 
 5.  Jalankan tes
-    
+
     `python3 test.py http://$LB_IP:8000 1`
 
     Bilangan 1 menyatakan jumlah _guaranteed resource_ dalam vCPU. Untuk skenario dengan >1vCPU ganti ini dengan jumlah vCPU yang dimaksud.
+
+    untuk menjalankan proses di background dan peroses tetap berjalan saat session terminal terputus, gunakan nohup:
+    `nohup python3 test.py http://$LB_IP:8000 1 &`
+
+    untuk melihat output, jika menggunakan nohup:
+    `watch -n 1 'tail -n 100 nohup.out'`
 
 6.  Setelah tes selesai, akan muncul report.csv. Jalankan analyze
 
@@ -144,7 +153,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
     Bilangan 0.5 dapat diganti dengan bilangan _float_ > 0.0 apa saja. Ia menyatakan banyaknya _shared resource_ dalam satuan vCPU.
 
 8.  Akan muncul analisis CPU dan plot.png. Unduh file atau pakai SCP untuk melihat hasilnya.
-    
+
     jalankan dr mesin lokal:
 
     `gcloud compute scp client:/srv/thesis/test/plot.png .`
@@ -155,7 +164,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 1.  (Untuk layanan Kubernetes GKE) Jalankan skrip stop
 
     `cd provision-gke`
-    
+
     `chmod +x stop.sh`
 
     `./stop.sh`
@@ -167,7 +176,7 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 2.  (Untuk manual IaaS GCE) Jalankan skrip stop
 
     `cd provision-gce`
-    
+
     `chmod +x stop.sh`
 
     `./stop.sh`
