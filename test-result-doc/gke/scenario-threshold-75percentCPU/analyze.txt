@@ -1,0 +1,38 @@
+python3 analyze.py
+/srv/thesis/test/analyze.py:32: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_used_arr.append(min(desired[i], actual[i]))
+/srv/thesis/test/analyze.py:33: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_idle_arr.append(actual[i] if actual[i] > desired[i] else 0.0)
+/srv/thesis/test/analyze.py:34: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_degr_arr.append(desired[i] if desired[i] > actual[i]*(1.0+alpha) else 0.0)
+/srv/thesis/test/analyze.py:35: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_shared_arr.append(actual[i]*(1.0+alpha) if desired[i] > actual[i] else 0.0)
+/srv/thesis/test/analyze.py:37: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_guaranteed_sum += actual[i]
+/srv/thesis/test/analyze.py:38: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_shared_sum += actual[i]*alpha if desired[i] > actual[i] else 0
+/srv/thesis/test/analyze.py:39: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_degradation_sum += max(desired[i]-actual[i]*(1.0+alpha), 0)
+CPU Guaranteed 2458.89648176682
+CPU Shared 0.0
+CPU Degradation 28.220000000000006
+
+
+python3 analyze.py 0.5
+/srv/thesis/test/analyze.py:32: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_used_arr.append(min(desired[i], actual[i]))
+/srv/thesis/test/analyze.py:33: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_idle_arr.append(actual[i] if actual[i] > desired[i] else 0.0)
+/srv/thesis/test/analyze.py:34: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_degr_arr.append(desired[i] if desired[i] > actual[i]*(1.0+alpha) else 0.0)
+/srv/thesis/test/analyze.py:35: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_shared_arr.append(actual[i]*(1.0+alpha) if desired[i] > actual[i] else 0.0)
+/srv/thesis/test/analyze.py:37: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_guaranteed_sum += actual[i]
+/srv/thesis/test/analyze.py:38: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_shared_sum += actual[i]*alpha if desired[i] > actual[i] else 0
+/srv/thesis/test/analyze.py:39: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  cpu_degradation_sum += max(desired[i]-actual[i]*(1.0+alpha), 0)
+CPU Guaranteed 2458.89648176682
+CPU Shared 19.9
+CPU Degradation 14.735000000000005
