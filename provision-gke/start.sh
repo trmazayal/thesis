@@ -3,7 +3,7 @@
 
 # Set zona
 #! /bin/bash
-gcloud config set compute/zone us-west1-a
+gcloud config set compute/zone asia-southeast1-a
 
 # Buat mesin klaster GKE (instalasi otomatis) dan mesin klien
 terraform init

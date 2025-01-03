@@ -32,9 +32,19 @@ Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalanka
 6.  Selesai menguji, pastikan melakukan [Cleanup](#cleanup) untuk menghapus resource yang disewa untuk keperluan tes.
 
 
-### Panduan instalasi
 
-1.  Clone repositori ini pada Google Cloud Shell atau Google Cloud SDK
+### Panduan instalasi
+1. Prasyarat yang diperlukan:
+    - mempunyai akun Google Cloud Platform
+
+    - installasi [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), [Google Cloud SDK ](https://cloud.google.com/sdk/docs/install), [kuectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+
+    - Memeriksa limitasi Quota di Google Cloud Console. Buka halaman [Google Cloud Quotas](https://console.cloud.google.com/iam-admin/quotas). tambahkan pada filter  `CPUs` dan region yg diinginkan. Pastikan bahwa quota CPU yang diinginkan tercukupi. Jika kurang dari 48, request peningkatan quota.
+    
+
+
+
+2.  Clone repositori ini pada Google Cloud Shell atau Google Cloud SDK
 
     `git clone https://github.com/hamonangann/thesis`
 
@@ -53,7 +63,10 @@ Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalanka
 
     `cd ..`
 
-    Note: ketikkan "yes" ketika muncul prompt
+    Note: 
+    - ketikkan "yes" ketika muncul prompt
+    - ganti ke region lain pada file provision-gke/main.tf & provision-gke/start.sh, jika terdapar error resource cpu tidak tersedia
+
 
 2.  (Untuk manual IaaS GCE) Jalankan skrip start
 
@@ -65,7 +78,10 @@ Di bawah ini terdapat berbagai panduan _setup_. Sebagai contoh, untuk menjalanka
 
     `cd ..`
     
-    Note: ketikkan "yes" ketika muncul prompt
+    Note:
+    - ketikkan "yes" ketika muncul prompt
+    - ganti ke region lain pada file provision-gce/main.tf & provision-gce/start.sh, jika terdapar error resource cpu tidak tersedia
+    - gunakan script `start-macos.sh` jika menjalankan di MacOS
 
 3.  Jalankan salah satu skenario (contoh: `baseline.yaml`)
 
@@ -97,6 +113,8 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
 
 1.  SSH ke dalam mesin virtual klien
 
+    `gcloud compute ssh client`
+
 2.  Nyalakan virtual environment
 
     `source /srv/venv/bin/activate`
@@ -126,6 +144,11 @@ Catatan: web hanya dapat diakses secara internal dalam satu network. Gunakan con
     Bilangan 0.5 dapat diganti dengan bilangan _float_ > 0.0 apa saja. Ia menyatakan banyaknya _shared resource_ dalam satuan vCPU.
 
 8.  Akan muncul analisis CPU dan plot.png. Unduh file atau pakai SCP untuk melihat hasilnya.
+    
+    jalankan dr mesin lokal:
+
+    `gcloud compute scp client:/srv/thesis/test/plot.png .`
+
 
 ### Cleanup
 

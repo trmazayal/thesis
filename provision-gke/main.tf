@@ -1,6 +1,6 @@
 resource "google_container_cluster" "cluster" {
   name               = "cluster"
-  location           = "us-west1-a"
+  location           = "asia-southeast1-a"
   initial_node_count = 1
 
   node_config {
@@ -23,7 +23,7 @@ resource "google_container_cluster" "cluster" {
 
 resource "google_compute_instance" "client" {
   name         = "client"
-  zone         = "us-west1-a"
+  zone         = "asia-southeast1-a"
   machine_type = "e2-standard-4"
 
   boot_disk {

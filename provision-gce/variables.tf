@@ -1,5 +1,5 @@
 variable "project" {}
 
 variable "zone" {
-  default = "us-west1-a"
+  default = "asia-southeast1-a"
 }
